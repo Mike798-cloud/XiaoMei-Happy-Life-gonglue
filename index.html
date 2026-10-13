@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>小美の快乐家园 · 通关手册</title>
+<style>
+  :root{
+    --ink:#1a1420; --paper:#d9d4c8; --paper2:#c9c3b4;
+    --win:#cfc9bd; --win-line:#f3efe4; --win-shade:#8a8478;
+    --title-blue:#0a1f6b; --led:#ff2a2a;
+    --f-serif:"Songti SC","SimSun","Noto Serif CJK SC",serif;
+    --f-kai:"Kaiti SC","KaiTi","STKaiti",serif;
+    --f-mono:"Courier New",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--f-serif); color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #2a2140 0%, #17121f 55%, #0c0a12 100%);
+    background-attachment:fixed;
+    line-height:1.9; min-height:100vh;
+  }
+  /* 星空点缀 */
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%,#fff8 0,transparent 2px),
+      radial-gradient(1px 1px at 70% 18%,#fff6 0,transparent 2px),
+      radial-gradient(1.5px 1.5px at 40% 70%,#ffd 0,transparent 3px),
+      radial-gradient(1px 1px at 85% 60%,#fff7 0,transparent 2px),
+      radial-gradient(1px 1px at 10% 85%,#cdf 0,transparent 2px),
+      radial-gradient(1.5px 1.5px at 60% 90%,#fff5 0,transparent 3px);
+  }
+  .wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:34px 20px 80px;}
+
+  /* 彩虹金属标题 */
+  .logo{
+    font-size:clamp(34px,7vw,62px);font-weight:900;text-align:center;
+    letter-spacing:4px;margin:6px 0 2px;line-height:1.1;
+    background:linear-gradient(180deg,#fff 0%,#ffe07a 16%,#7CFC00 34%,#00e5ff 52%,#5b8bff 68%,#e85bff 84%,#ff5b6e 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 1px #000) drop-shadow(0 0 14px rgba(120,90,255,.35));
+    font-family:var(--f-serif);
+  }
+  .sub{text-align:center;color:#b9b0d0;font-family:var(--f-kai);
+    font-size:15px;letter-spacing:3px;margin:0 0 6px;}
+  .meta-line{text-align:center;color:#8f87a6;font-size:12px;
+    font-family:var(--f-mono);margin-bottom:26px;}
+  .led{font-family:var(--f-mono);color:var(--led);font-weight:bold;
+    text-shadow:0 0 6px #ff2a2a,0 0 14px #f008;letter-spacing:3px;}
+
+  /* Win98 窗口 */
+  .win{background:var(--win);border:2px solid;border-color:var(--win-line) var(--win-shade) var(--win-shade) var(--win-line);
+    box-shadow:0 10px 30px #000a, inset 0 0 0 1px #0002;margin:0 0 24px;border-radius:2px;}
+  .win-tb{background:linear-gradient(180deg,#3a5fd0 0%,#163a9c 55%,#0a1f6b 100%);
+    color:#fff;display:flex;align-items:center;gap:8px;padding:5px 10px;
+    font-family:var(--f-serif);font-weight:bold;font-size:15px;letter-spacing:1px;}
+  .win-tb .tag{font-size:11px;font-weight:normal;opacity:.85;font-family:var(--f-mono);}
+  .win-bd{padding:16px 18px 20px;}
+  .win-bd p{margin:8px 0;}
+  .note{font-family:var(--f-kai);color:#3a3340;}
+  .small{font-size:13px;color:#5a5462;}
+  .kbd{font-family:var(--f-mono);background:#efece3;border:1px solid #9b958a;border-bottom-width:2px;
+    padding:1px 6px;border-radius:2px;font-size:13px;}
+  .quote{border-left:3px solid #8a6ac0;background:#0000000a;padding:6px 12px;margin:10px 0;
+    font-family:var(--f-kai);color:#332d40;}
+
+  /* 流程地图 */
+  .flow{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-family:var(--f-mono);font-size:13px;}
+  .flow .node{background:#efece3;border:1px solid #9b958a;padding:3px 9px;border-radius:2px;white-space:nowrap;}
+  .flow .arrow{color:#8a6ac0;font-weight:bold;}
+  .flow .node.dark{background:#241d33;color:#d8cfe8;border-color:#000;}
+
+  /* 谜题折叠 */
+  details.pz{background:#e7e2d5;border:1px solid #b3ad9f;border-radius:2px;margin:10px 0;}
+  details.pz>summary{cursor:pointer;list-style:none;padding:10px 14px;display:flex;
+    align-items:baseline;gap:10px;font-weight:bold;user-select:none;}
+  details.pz>summary::-webkit-details-marker{display:none;}
+  details.pz>summary .mid{font-family:var(--f-mono);color:#6a4ec0;font-size:13px;}
+  details.pz>summary .where{font-weight:normal;font-size:12px;color:#6a6472;font-family:var(--f-kai);}
+  details.pz[open]>summary{border-bottom:1px solid #b3ad9f;background:#efece3;}
+  .pz-bd{padding:12px 16px 14px;}
+  .hint{display:flex;gap:10px;margin:8px 0;align-items:flex-start;}
+  .hint .lv{flex:0 0 auto;font-family:var(--f-mono);font-size:11px;color:#fff;
+    background:#8a8478;padding:2px 7px;border-radius:2px;margin-top:3px;}
+  .hint.l2 .lv{background:#b08a2a;}
+  .hint.l3 .lv{background:#b03030;}
+  .hint.l3 .tx{font-weight:bold;}
+  .warnbox{background:#2a0f12;border:1px solid #6a2028;color:#f3c9c0;padding:10px 14px;border-radius:2px;
+    font-family:var(--f-kai);}
+  .spoiler{color:#1a1420;background:#1a1420;border-radius:2px;padding:0 4px;transition:.2s;}
+  .spoiler:hover{color:#f3e9d2;background:#3a2a3a;}
+  hr.soft{border:0;border-top:1px solid #b3ad9f;margin:18px 0;}
+  .foot{color:#8f87a6;text-align:center;font-size:12px;font-family:var(--f-mono);margin-top:30px;}
+  a{color:#1a44c8;}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="wrap">
+
+  <div class="logo">小美の快乐家园</div>
+  <div class="sub">—— 通 关 手 册 ·  一 个 关 于 等 待 与 告 别 的 故 事 ——</div>
+  <div class="meta-line">建议先自己走走，卡关了再来翻 ·  全作首通约 <span class="led">70–95</span> 分钟</div>
+
+  <!-- 回信：跳转编号 -->
+  <div class="win">
+    <div class="win-tb">📮 给「找不到跳转编号」的你 <span class="tag">RE: 编号跳转</span></div>
+    <div class="win-bd">
+      <p class="note">这个编号不用另外找，它从一开始就挂在你眼前——<b>主页右上角的计数器</b>分两行写着：<span class="led">你是第 000113</span>　<span class="led">个没能离开的人</span>。</p>
+      <p>留言本窗口右下角有个「编号跳转」输入框，它<b>一开始是灰色的、不能输入</b>。请按下面的顺序来：</p>
+      <div class="quote">
+        1. 把留言本一页页翻到<b>最后一页</b>；<br>
+        2. 下方会出现被划改过的碎纸片，把它<b>拼回最初的两个字</b>（详见 M3）；<br>
+        3. 拼对之后，跳转框就会亮起来，再输入 <span class="kbd">000113</span>（只输 <span class="kbd">113</span> 也可以）。
+      </div>
+      <p class="small">小提示：如果在留言本里反复点窗口右上角的「×」想关掉它，会关不掉；多试几次，她也会悄悄把答案的方向告诉你——「你自己的编号，好像就写在主页计数器上。」</p>
+    </div>
+  </div>
+
+  <!-- 流程地图 -->
+  <div class="win">
+    <div class="win-tb">🗺 全流程地图 <span class="tag">12 场景 · 12 谜题</span></div>
+    <div class="win-bd">
+      <div class="flow">
+        <span class="node">序章·登录旧邮箱</span><span class="arrow">→</span>
+        <span class="node">主页</span><span class="tag">(M1·M2)</span><span class="arrow">→</span>
+        <span class="node">留言本</span><span class="tag">(M3·M4)</span><span class="arrow">→</span>
+        <span class="node dark">蜕皮·聊天室</span><span class="arrow">→</span>
+        <span class="node dark">烧焦房</span><span class="tag">(M5–M8)</span><span class="arrow">→</span>
+        <span class="node dark">真相</span><span class="tag">(M9)</span><span class="arrow">→</span>
+        <span class="node dark">那一天·回忆</span><span class="tag">(M10·M11)</span><span class="arrow">→</span>
+        <span class="node dark">终章</span><span class="tag">(M12)</span><span class="arrow">→</span>
+        <span class="node dark">三结局</span>
+      </div>
+      <p class="small" style="margin-top:14px;">前半段（主页、留言本）是明亮的 2003 儿童网站；从第 113 条留言开始，画面会一点点焦黄、变暗，进入里层。不用着急，每一处文字都值得停下来读。</p>
+    </div>
+  </div>
+
+  <!-- 谜题：表层 -->
+  <div class="win">
+    <div class="win-tb">🔒 谜题 · 表层（明亮的旧网页）</div>
+    <div class="win-bd">
+
+      <details class="pz"><summary><span class="mid">M1</span>相册的一百颗<span class="where">主页 · 我的照片（三位数字锁）</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">「我的照片」挂着一把小锁，要三个数字。</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">小美一直相信一句话：数满多少颗，病就会好？</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">江边的萤火虫数满一百颗——输入 <span class="kbd">100</span>。</span></div>
+        </div>
+      </details>
+
+      <details class="pz"><summary><span class="mid">M2</span>栏目顺序<span class="where">主页 · 三个栏目</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">这些栏目，好像该按一天里的先后顺序看。</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">先认识她，再看照片，然后看好朋友。</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">依次点开：关于小美 → 我的照片 → 好朋友们。</span></div>
+        </div>
+      </details>
+
+      <details class="pz"><summary><span class="mid">M3</span>留言拼字<span class="where">留言本 · 翻到最后一页</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">被划掉的字下面，好像还压着别的字。</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">把碎纸片拼回去，看看最早写的是什么。</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">把「快」「来」拖进两个格子，底层原文是<span class="spoiler">「快来」</span>。（「快逃」是后来惊恐的人改的。）</span></div>
+        </div>
+      </details>
+
+      <details class="pz"><summary><span class="mid">M4</span>计数器密码<span class="where">留言本 · 编号跳转框</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">留言本的编号跳转框，能输入什么？</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">你是第几位访客，就输入那个数字。</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">输入 <span class="kbd">000113</span>（或 <span class="kbd">113</span>），打开第 113 条留言。</span></div>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <!-- 谜题：里层 -->
+  <div class="win">
+    <div class="win-tb">🕯 谜题 · 里层（焦黄与烧焦之后）</div>
+    <div class="win-bd">
+
+      <details class="pz"><summary><span class="mid">M5</span>修复乱码文件<span class="where">烧焦房 · 文件管理器（−5 位移）</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">她好像把字母都挪了位置。</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">日记本扉页画着怎么挪——字母往后数了 5 个。</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">点击「解码（−5）」按钮，把字母倒回来。</span></div>
+        </div>
+      </details>
+
+      <details class="pz"><summary><span class="mid">M6</span>看得见的求救<span class="where">烧焦房 · 烧焦的纸</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">烧焦的纸上画着一排点和划（不用听声音，看着符号就够）。</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">短的是点，长的是划；三下短、三下长、三下短。</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">照着符号点出 <span class="kbd">··· −−− ···</span>，即 SOS。</span></div>
+        </div>
+      </details>
+
+      <details class="pz"><summary><span class="mid">M7</span>警示牌解码<span class="where">烧焦房 · 门上的黄黑牌子</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">牌子上的字和乱码文件是同一种密码。</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">同样往后数 5 个再倒回来。</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">解码为<span class="spoiler">「危险 · 勿入」</span>。</span></div>
+        </div>
+      </details>
+
+      <details class="pz"><summary><span class="mid">M8</span>源代码里的钥匙<span class="where">烧焦房 · 查看网页源文件</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">她好像在网页里藏了话。</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">去「查看网页源文件」里，找绿色的注释。</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">照片夹口令是第一次聊天的日子：<span class="kbd">0712</span>。</span></div>
+        </div>
+      </details>
+
+      <details class="pz"><summary><span class="mid">M9</span>记忆碎片排序<span class="where">真相</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">这些碎片，是你忘掉的那一天。</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">先搬家，然后网线断了，再后来……</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">搬家 → 断网 → 转学遗忘。</span></div>
+        </div>
+      </details>
+
+      <details class="pz"><summary><span class="mid">M10</span>折纸船<span class="where">那一天 · 回忆</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">纸船要一步一步折。</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">先对折出三角，再把角翻起来。</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">按 1→6 的顺序拖入折船步骤。</span></div>
+        </div>
+      </details>
+
+      <details class="pz"><summary><span class="mid">M11</span>火灾行动序列<span class="where">那一天 · 回忆（火起之后）</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">她当时先做了什么？</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">先泼水、叫外婆，再把小宇推到阳台。</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">泼水 → 外婆 → 小宇 → 折返。</span></div>
+        </div>
+      </details>
+
+      <details class="pz"><summary><span class="mid">M12</span>告别仪式<span class="where">终章</span></summary>
+        <div class="pz-bd">
+          <div class="hint l1"><span class="lv">提示</span><span class="tx">桌上的三样东西，都有它们的用处。</span></div>
+          <div class="hint l2"><span class="lv">再想想</span><span class="tx">先点蜡烛，再放花，最后读信、回信。</span></div>
+          <div class="hint l3"><span class="lv">答案</span><span class="tx">点燃 → 献花 → 读信 → 回信。</span></div>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <!-- 结局：严重剧透 -->
+  <div class="win">
+    <div class="win-tb">🌙 结局与真结局 <span class="tag">※ 以下为严重剧透</span></div>
+    <div class="win-bd">
+      <div class="warnbox">
+        本作共有三个结局。<br>
+        · 终章选择「跑」——<b>结局·逃离</b>；<br>
+        · 终章选择「留」——<b>结局·留下</b>。<br>
+        想看到最完整的那个结局，需要你在告别之前，认真把这一趟走过的地方都补齐。
+      </div>
+      <hr class="soft">
+      <p class="small">真结局的达成条件（长按/悬停查看）：</p>
+      <p class="note">
+        <span class="spoiler">① 读完小美全部 7 篇日记；</span><br>
+        <span class="spoiler">② 把电脑里的 10 个乱码文件全部修复；</span><br>
+        <span class="spoiler">③ 随身带着三样东西：一支蜡烛、一朵小白花、一封信；</span><br>
+        <span class="spoiler">④ 在墓地完成献花、点烛，再回到终章完成 M12 告别仪式。</span>
+      </p>
+      <p class="small">真结局片尾，她会对你说「谢谢你，回来过」——你是第 000113 个访客，也是第一个真正回头的人。</p>
+    </div>
+  </div>
+
+  <div class="foot">小美の快乐家园 · 通关手册 　|　 她等了很久，你愿意回来，就已经很好了。</div>
+
+</div>
+</body>
+</html>
